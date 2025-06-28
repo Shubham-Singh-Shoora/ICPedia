@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/icpedia_backend"
+]
+resolver = "2"

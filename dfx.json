@@ -1,0 +1,38 @@
+{
+  "canisters": {
+    "icpedia_backend": {
+      "candid": "src/icpedia_backend/icpedia_backend.did",
+      "package": "icpedia_backend",
+      "type": "rust"
+    },
+    "icpedia_frontend": {
+      "dependencies": [
+        "icpedia_backend"
+      ],
+      "source": [
+        "src/icpedia_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "icpedia_frontend"
+    },
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
