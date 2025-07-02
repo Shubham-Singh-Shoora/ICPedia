@@ -1,0 +1,46 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
+
+:root {
+  --primary-purple: #bf1df5;
+  --dark-bg: #0A0A23;
+  --secondary-teal: #9b45f0;
+  --accent-white: #F8F9FA;
+  --shadow-blue: #16213E;
+  --hover-purple: #a97cff;
+  --border-color: #3D405B;
+  --subtle-text: #9899A1;
+  --success-green: #28a745;
+  --error-red: #dc3545;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--accent-white);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #2a0d45 0%, var(--dark-bg) 100%);
+}
+
+.glass-card {
+  background: rgba(22, 33, 62, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(191, 29, 245, 0.3);
+}
