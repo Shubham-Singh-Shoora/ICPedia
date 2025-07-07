@@ -4,56 +4,200 @@ import { Button } from '@/components/ui/button';
 import VideoCard from '@/components/VideoCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import VideoModal from '@/components/VideoModal';
 
 const Videos = () => {
   const [activeFilter, setActiveFilter] = useState('All');
 
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null);
+
   const filters = ['All', 'ICP', 'Motoko', 'Rust'];
 
   // Mock data - replace with actual data from backend
+  
   const videos = [
-    {
-      id: '1',
-      thumbnailUrl: '/lovable-uploads/a6ab8d7d-b9d7-4ba8-9f24-8e11492cb8b0.png',
-      title: 'Introduction to Internet Computer',
-      duration: '15:30',
-      topic: 'ICP',
-      progress: 75
-    },
-    {
-      id: '2',
-      thumbnailUrl: '/lovable-uploads/7616c929-6994-4ef6-a9ef-319a92c4d335.png',
-      title: 'Getting Started with Motoko',
-      duration: '22:15',
-      topic: 'Motoko',
-      progress: 0
-    },
-    {
-      id: '3',
-      thumbnailUrl: '/lovable-uploads/8650c725-98fc-46ec-81fe-6f8e71664db9.png',
-      title: 'Building Canisters with Rust',
-      duration: '28:45',
-      topic: 'Rust',
-      progress: 30
-    },
-    {
-      id: '4',
-      thumbnailUrl: '/lovable-uploads/fc1ca50c-9fd6-46b8-b736-3fa24b7e1181.png',
-      title: 'Advanced ICP Concepts',
-      duration: '35:20',
-      topic: 'ICP',
-      progress: 0
-    }
-  ];
+  
+  {
+    id: '1',
+    thumbnailUrl: 'https://img.youtube.com/vi/sFtBDE7nYTA/hqdefault.jpg',
+    title: 'ICP Video 1',
+    duration: '15:30',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/sFtBDE7nYTA?autoplay=0'
+  },
+  {
+    id: '2',
+    thumbnailUrl: 'https://img.youtube.com/vi/zxt16F2CqBY/hqdefault.jpg',
+    title: 'ICP Video 2',
+    duration: '18:00',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/zxt16F2CqBY?autoplay=0'
+  },
+  {
+    id: '3',
+    thumbnailUrl: 'https://img.youtube.com/vi/yEDdme2dH8Y/hqdefault.jpg',
+    title: 'ICP Video 3',
+    duration: '20:00',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/yEDdme2dH8Y?autoplay=0'
+  },
+  {
+    id: '4',
+    thumbnailUrl: 'https://img.youtube.com/vi/Z77ay0qjkJg/hqdefault.jpg',
+    title: 'ICP Video 4',
+    duration: '22:10',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/Z77ay0qjkJg?autoplay=0'
+  },
+  {
+    id: '5',
+    thumbnailUrl: 'https://img.youtube.com/vi/--2a6iCuav0/hqdefault.jpg',
+    title: 'ICP Video 5',
+    duration: '25:30',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/--2a6iCuav0?autoplay=0'
+  },
+  {
+    id: '6',
+    thumbnailUrl: 'https://img.youtube.com/vi/ehG9V3E1oeQ/hqdefault.jpg',
+    title: 'ICP Video 6',
+    duration: '24:45',
+    topic: 'ICP',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/ehG9V3E1oeQ?autoplay=0'
+  },
+  {
+    id: '7',
+    thumbnailUrl: '/lovable-uploads/rust1.png',
+    title: 'Rust Basics for ICP',
+    duration: '16:10',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/qT5YeRZ_DYY?autoplay=0',
+  },
+  {
+    id: '8',
+    thumbnailUrl: '/lovable-uploads/rust2.png',
+    title: 'Rust Canisters & Project Setup',
+    duration: '18:22',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/zb9OQUOqNKo?autoplay=0',
+  },
+  {
+    id: '9',
+    thumbnailUrl: '/lovable-uploads/rust3.png',
+    title: 'Stable Memory in Rust',
+    duration: '12:45',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/UbNXh_hWdiE?autoplay=0',
+  },
+  {
+    id: '10',
+    thumbnailUrl: '/lovable-uploads/rust4.png',
+    title: 'Handling State in Rust',
+    duration: '14:00',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/spyUzz20B04?autoplay=0',
+  },
+  {
+    id: '11',
+    thumbnailUrl: '/lovable-uploads/rust5.png',
+    title: 'Rust Canister Upgrades',
+    duration: '13:30',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/9nXB5DftZ94?autoplay=0',
+  },
+  {
+    id: '12',
+    thumbnailUrl: '/lovable-uploads/rust6.png',
+    title: 'Rust Testing & Deployment',
+    duration: '15:50',
+    topic: 'Rust',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/AZqcrMamZnE?autoplay=0',
+  },
+  {
+    id: '13',
+    thumbnailUrl: '/lovable-uploads/motoko1.png',
+    title: 'Motoko Syntax & Basics',
+    duration: '15:20',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/H3Z4K63JMo0?autoplay=0',
+  },
+  {
+    id: '14',
+    thumbnailUrl: '/lovable-uploads/motoko2.png',
+    title: 'Motoko Functions & Variables',
+    duration: '14:10',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/jqEsz5vKjBs?autoplay=0',
+  },
+  {
+    id: '15',
+    thumbnailUrl: '/lovable-uploads/motoko3.png',
+    title: 'Actors & Canisters in Motoko',
+    duration: '16:35',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/jlzGypWchIE?autoplay=0',
+  },
+  {
+    id: '16',
+    thumbnailUrl: '/lovable-uploads/motoko4.png',
+    title: 'Stable Variables in Motoko',
+    duration: '13:45',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/wzHIEJvtaQ4?autoplay=0',
+  },
+  {
+    id: '17',
+    thumbnailUrl: '/lovable-uploads/motoko5.png',
+    title: 'Data Types and Options',
+    duration: '12:40',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/X1Bl08B6ti4?autoplay=0',
+  },
+  {
+    id: '18',
+    thumbnailUrl: '/lovable-uploads/motoko6.png',
+    title: 'Motoko Collections: Arrays & Maps',
+    duration: '14:55',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/SzSzm8G3sT0?autoplay=0',
+  },
+  {
+    id: '19',
+    thumbnailUrl: '/lovable-uploads/motoko7.png',
+    title: 'Inter-canister Calls in Motoko',
+    duration: '13:10',
+    topic: 'Motoko',
+    progress: 0,
+    videoUrl: 'https://www.youtube.com/embed/yLv-juJ0PnQ?autoplay=0',
+  },
+];
 
-  const filteredVideos = activeFilter === 'All' 
-    ? videos 
+  const filteredVideos = activeFilter === 'All'
+    ? videos
     : videos.filter(video => video.topic === activeFilter);
 
   return (
     <div className="min-h-screen bg-dark-bg">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-headings font-bold text-accent mb-4">
@@ -72,11 +216,10 @@ const Videos = () => {
                 key={filter}
                 variant={activeFilter === filter ? "default" : "ghost"}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-6 py-2 rounded-md transition-all duration-300 ${
-                  activeFilter === filter 
-                    ? 'bg-primary text-white' 
-                    : 'text-subtle-text hover:text-accent'
-                }`}
+                className={`px-6 py-2 rounded-md transition-all duration-300 ${activeFilter === filter
+                  ? 'bg-primary text-white'
+                  : 'text-subtle-text hover:text-accent'
+                  }`}
               >
                 {filter}
               </Button>
@@ -95,6 +238,8 @@ const Videos = () => {
               duration={video.duration}
               topic={video.topic}
               progress={video.progress}
+              videoUrl={video.videoUrl}
+              
             />
           ))}
         </div>
@@ -107,6 +252,12 @@ const Videos = () => {
           </div>
         )}
       </div>
+      {selectedVideoUrl && (
+        <VideoModal
+          videoUrl={selectedVideoUrl}
+          onClose={() => setSelectedVideoUrl(null)}
+        />
+      )}
 
       <Footer />
     </div>

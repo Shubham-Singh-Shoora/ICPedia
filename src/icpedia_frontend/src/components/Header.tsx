@@ -4,10 +4,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, User } from 'lucide-react';
 
+import { AuthClient } from '@dfinity/auth-client';
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+const [principal, setPrincipal] = useState<string | null>(null);
 
   const navLinks = [
     { name: 'AI Tutor', href: '/tutor' },
@@ -17,10 +20,27 @@ const Header = () => {
     { name: 'Resources', href: '/resources' },
   ];
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     // TODO: Implement Internet Identity login
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
+    const authClient = await AuthClient.create();
+
+  await authClient.login({
+    identityProvider: "https://identity.ic0.app/#authorize",
+    onSuccess: async () => {
+      const identity = authClient.getIdentity();
+      const principal = identity.getPrincipal().toString();
+      setPrincipal(principal);
+      setIsLoggedIn(true);
+      console.log("Logged in with Principal:", principal);
+    },
+    onError: (err) => {
+      console.error("Login failed:", err);
+    }
+  });
   };
+
+  
 
   const handleLogout = () => {
     // TODO: Implement logout
