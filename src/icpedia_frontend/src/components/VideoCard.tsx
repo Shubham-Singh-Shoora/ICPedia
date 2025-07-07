@@ -1,7 +1,6 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Play, Clock } from 'lucide-react';
+import { Clock, Play } from 'lucide-react';
 
 interface VideoCardProps {
   thumbnailUrl: string;
@@ -10,11 +9,20 @@ interface VideoCardProps {
   topic: string;
   progress: number;
   videoId: string;
+  videoUrl: string; // ✅ make sure this prop is received
 }
 
-const VideoCard = ({ thumbnailUrl, title, duration, topic, progress, videoId }: VideoCardProps) => {
+const VideoCard = ({
+  thumbnailUrl,
+  title,
+  duration,
+  topic,
+  progress,
+  videoId,
+  videoUrl,
+}: VideoCardProps) => {
   return (
-    <Card className="glass-card hover:glow-effect transition-all duration-300 cursor-pointer group">
+    <Card className="glass-card transition-all duration-300 group overflow-hidden">
       <CardContent className="p-0">
         <div className="relative">
           <img
@@ -34,24 +42,24 @@ const VideoCard = ({ thumbnailUrl, title, duration, topic, progress, videoId }: 
             </div>
           )}
         </div>
+
         <div className="p-4">
           <div className="flex items-center justify-between mb-2">
             <Badge variant="secondary" className="bg-primary text-white">
               {topic}
             </Badge>
             <div className="flex items-center text-subtle-text text-sm">
-              <Clock className="w-4 h-4 mr-1" />
+              {/* <Clock className="w-4 h-4 mr-1" />
               {duration}
+            </div> */}
             </div>
+            <h3 className="text-lg font-headings font-semibold text-accent mb-2 line-clamp-2">
+              {title}
+            </h3>
+            {/* {progress > 0 && (
+            <p className="text-sm text-subtle-text">{progress}% complete</p>
+          )} */}
           </div>
-          <h3 className="text-lg font-headings font-semibold text-accent mb-2 line-clamp-2">
-            {title}
-          </h3>
-          {progress > 0 && (
-            <p className="text-sm text-subtle-text">
-              {progress}% complete
-            </p>
-          )}
         </div>
       </CardContent>
     </Card>
