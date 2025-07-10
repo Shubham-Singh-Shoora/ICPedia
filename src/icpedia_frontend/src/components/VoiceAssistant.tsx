@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Mic, MicOff } from 'lucide-react';
 
@@ -23,7 +22,19 @@ const VoiceAssistant = ({ isSpeaking = false, isListening = false, onMicToggle }
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className={`relative w-48 h-48 mb-6 ${animationClass}`}>
+      <div
+        className={`relative w-48 h-48 mb-6 cursor-pointer transition-transform hover:scale-105 ${animationClass}`}
+        onClick={onMicToggle}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onMicToggle?.();
+          }
+        }}
+        aria-label={isListening ? "Stop listening" : "Start listening"}
+      >
         <div className="w-full h-full bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center glass-card">
           <div className="w-32 h-32 bg-dark-bg rounded-full flex items-center justify-center">
             <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
@@ -35,7 +46,7 @@ const VoiceAssistant = ({ isSpeaking = false, isListening = false, onMicToggle }
             </div>
           </div>
         </div>
-        
+
         {/* Animated rings */}
         {(isSpeaking || isListening) && (
           <>
@@ -44,7 +55,7 @@ const VoiceAssistant = ({ isSpeaking = false, isListening = false, onMicToggle }
           </>
         )}
       </div>
-      
+
       <div className="text-center">
         <h3 className="text-xl font-headings font-semibold text-accent mb-2">
           AI Tutor
@@ -52,6 +63,13 @@ const VoiceAssistant = ({ isSpeaking = false, isListening = false, onMicToggle }
         <p className="text-subtle-text">
           {isSpeaking ? 'Speaking...' : isListening ? 'Listening...' : 'Ready to help you learn'}
         </p>
+
+        {/* Click hint */}
+        {!isSpeaking && !isListening && (
+          <p className="text-xs text-subtle-text mt-2 opacity-70">
+            Click the microphone to start voice interaction
+          </p>
+        )}
       </div>
     </div>
   );

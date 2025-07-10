@@ -1,61 +1,195 @@
-# `icpedia`
+# ICPedia - AI-Powered Internet Computer Learning Platform
 
-Welcome to your new `icpedia` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+ICPedia is an innovative educational platform that combines the power of the Internet Computer blockchain with AI-driven tutoring to provide an interactive learning experience for ICP, Motoko, and Rust development.
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+## 🌟 Features
 
-To learn more before you start working with `icpedia`, see the following documentation available online:
+### 🤖 AI Tutor Integration
+- **Omnidimension AI**: Intelligent tutoring powered by advanced AI
+- **Interactive Chat**: Real-time conversations with your AI tutor
+- **Code Examples**: Automatic code block detection and syntax highlighting
+- **Voice Assistant**: Speech-to-text and text-to-speech capabilities
+- **Persistent Storage**: Chat history stored on ICP blockchain
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
-- [ic-cdk](https://docs.rs/ic-cdk)
-- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
-- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
+### 🔗 Blockchain Integration
+- **User Canisters**: Personal storage on Internet Computer
+- **Decentralized Profiles**: User progress and achievements on-chain
+- **Secure Authentication**: ICP identity-based access control
+- **Scalable Architecture**: Modular canister design
 
-If you want to start working on your project right away, you might want to try the following commands:
+### 📚 Learning Features
+- **Progress Tracking**: XP system and learning streaks
+- **Interactive Quizzes**: Hands-on learning assessments  
+- **Video Integration**: Educational content with progress tracking
+- **Modern UI**: Beautiful, responsive interface built with React + TypeScript
 
+## 🚀 Quick Start
+
+### Option 1: Automated Setup (Recommended)
 ```bash
-cd icpedia/
-dfx help
-dfx canister --help
+# Clone and setup everything
+git clone <repository>
+cd icpedia
+./setup_ai_tutor.sh
+
+# Configure your AI agent
+python3 setup_omnidimension_agent.py
+
+# Test the integration
+./test_ai_integration.sh
+
+# Start development
+cd src/icpedia_frontend && npm run dev
 ```
 
-## Running the project locally
+### Option 2: Manual Setup
+See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed manual setup instructions.
 
-If you want to test your project locally, you can use the following commands:
+## 📋 Prerequisites
+
+- **dfx CLI**: [Install here](https://internetcomputer.org/docs/current/developer-docs/setup/install/)
+- **Node.js**: Version 16 or higher
+- **Python 3.7+**: For Omnidimension AI setup
+- **Omnidimension Account**: Sign up at [omnidimension.ai](https://omnidimension.ai)
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Frontend (React + TypeScript)          │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
+│  │   Chat UI       │ │  Voice Assistant │ │   Progress UI   ││
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+                              │
+                    ┌─────────┼─────────┐
+                    │                   │
+        ┌───────────▼──────────┐ ┌─────▼──────────────┐
+        │  Omnidimension AI    │ │  Internet Computer │
+        │     (External)       │ │    (Blockchain)    │
+        └──────────────────────┘ └────────────────────┘
+                                         │
+                            ┌────────────┼────────────┐
+                            │                         │
+                  ┌─────────▼─────────┐    ┌─────────▼─────────┐
+                  │  User Canister    │    │ Directory Canister │
+                  │  (Personal Data)  │    │  (User Registry)   │
+                  └───────────────────┘    └───────────────────┘
+```
+
+## 📁 Project Structure
+
+```
+icpedia/
+├── src/
+│   ├── icpedia_backend/           # Rust canisters
+│   │   ├── user_canister/         # User profiles & chat storage
+│   │   ├── directory_canister/    # User registry management
+│   │   └── shared/                # Common types and utilities
+│   └── icpedia_frontend/          # React frontend
+│       ├── src/
+│       │   ├── pages/Tutor.tsx    # AI chat interface
+│       │   ├── hooks/useAIChat.ts # Chat state management
+│       │   ├── services/          # API integrations
+│       │   └── components/        # Reusable UI components
+│       └── .env                   # Configuration
+├── setup_ai_tutor.sh             # Automated setup script
+├── test_ai_integration.sh         # Integration testing
+├── setup_omnidimension_agent.py  # AI agent configuration
+├── AI_TUTOR_SETUP.md             # Detailed setup guide
+└── DEVELOPMENT.md                 # Development documentation
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+Copy `.env.example` to `.env` and configure:
 
 ```bash
-# Starts the replica, running in the background
+# Omnidimension AI Configuration
+VITE_OMNI_API_KEY=your_api_key_here
+VITE_OMNI_AGENT_ID=your_agent_id_here
+
+# User Canister Configuration  
+VITE_USER_CANISTER_ID=your_canister_id_here
+
+# Development settings
+VITE_LOCAL_REPLICA_PORT=4943
+VITE_DFX_NETWORK=local
+```
+
+### AI Agent Setup
+1. Sign up at [omnidimension.ai](https://omnidimension.ai)
+2. Run the setup script: `python3 setup_omnidimension_agent.py`
+3. Copy the generated credentials to your `.env` file
+
+## 🛠️ Development
+
+### Local Development
+```bash
+# Start ICP replica
 dfx start --background
 
-# Deploys your canisters to the replica and generates your candid interface
+# Deploy canisters
 dfx deploy
+
+# Start frontend development server
+cd src/icpedia_frontend
+npm run dev
 ```
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
-
-If you have made changes to your backend canister, you can generate a new candid interface with
-
+### Testing
 ```bash
-npm run generate
+# Run integration tests
+./test_ai_integration.sh
+
+# Test specific canister functions
+dfx canister call user_canister ping
+dfx canister call user_canister get_chat_messages '(opt 10)'
 ```
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+## 📚 Documentation
 
-If you are making frontend changes, you can start a development server with
+- **[AI Tutor Setup Guide](AI_TUTOR_SETUP.md)**: Detailed integration setup
+- **[Development Guide](DEVELOPMENT.md)**: Development workflow and best practices
+- **[ICP Documentation](https://internetcomputer.org/docs)**: Official Internet Computer docs
+- **[Omnidimension API](https://docs.omnidimension.ai)**: AI service documentation
 
-```bash
-npm start
-```
+## 🔗 Key Technologies
 
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Vite
+- **Backend**: Rust, IC CDK, Candid
+- **AI**: Omnidimension AI Platform
+- **Blockchain**: Internet Computer Protocol (ICP)
+- **Voice**: Web Speech API, Omnidimension Voice
 
-### Note on frontend environment variables
+## 🤝 Contributing
 
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
+We welcome contributions! Please see [DEVELOPMENT.md](DEVELOPMENT.md) for:
+- Development setup for contributors
+- Code style guidelines
+- Pull request process
+- Testing requirements
 
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support
+
+- **Issues**: Report bugs and feature requests on GitHub
+- **ICP Community**: [Developer Forum](https://forum.dfinity.org)
+- **AI Integration**: [Omnidimension Support](mailto:support@omnidimension.ai)
+
+## 🎯 Roadmap
+
+- [ ] Advanced voice interaction features
+- [ ] Multi-language support for tutorials
+- [ ] Collaborative learning features
+- [ ] Mobile app development
+- [ ] Advanced analytics and progress tracking
+- [ ] Integration with more AI providers
+
+---
+
+Built with ❤️ for the Internet Computer ecosystem

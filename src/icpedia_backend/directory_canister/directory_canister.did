@@ -1,0 +1,24 @@
+type DirectoryError = variant {
+  Unauthorized;
+  CanisterCreationFailed : text;
+  InstallationFailed : text;
+  InvalidPrincipal
+};
+
+type UserCanisterEntry = record {
+  canister_id : principal;
+  created_at : nat64;
+  username : text
+};
+
+service : {
+  get_or_create_user_canister : (text) -> (variant { Ok : principal; Err : DirectoryError });
+  get_user_canister : (principal) -> (opt principal) query;
+  get_all_users : () -> (variant { Ok : vec record { principal; UserCanisterEntry }; Err : DirectoryError }) query;
+  upload_user_canister_wasm : (blob) -> (variant { Ok : null; Err : DirectoryError });
+  add_admin : (principal) -> (variant { Ok : null; Err : DirectoryError });
+  check_user_canister_exists : (principal) -> (variant { Ok : opt UserCanisterEntry; Err : DirectoryError }) query;
+  get_user_canister_info : (principal) -> (opt UserCanisterEntry) query;
+  user_canister_exists : (principal) -> (bool) query;
+  verify_user_canister : (principal) -> (variant { Ok : record { bool; opt text }; Err : DirectoryError })
+}

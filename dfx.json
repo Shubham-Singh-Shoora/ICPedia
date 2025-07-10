@@ -1,13 +1,18 @@
 {
   "canisters": {
-    "icpedia_backend": {
-      "candid": "src/icpedia_backend/icpedia_backend.did",
-      "package": "icpedia_backend",
+    "directory_canister": {
+      "candid": "src/icpedia_backend/directory_canister/directory_canister.did",
+      "package": "directory_canister",
+      "type": "rust"
+    },
+    "user_canister": {
+      "candid": "src/icpedia_backend/user_canister/user_canister.did",
+      "package": "user_canister",
       "type": "rust"
     },
     "icpedia_frontend": {
       "dependencies": [
-        "icpedia_backend"
+        "directory_canister"
       ],
       "source": [
         "src/icpedia_frontend/dist"

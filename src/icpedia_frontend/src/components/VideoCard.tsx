@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Play } from 'lucide-react';
+import { Clock, Play, Check } from 'lucide-react';
 
 interface VideoCardProps {
   thumbnailUrl: string;
@@ -9,7 +9,8 @@ interface VideoCardProps {
   topic: string;
   progress: number;
   videoId: string;
-  videoUrl: string; // ✅ make sure this prop is received
+  videoUrl: string;
+  onVideoClick: (videoId: string, videoUrl: string, title: string) => void;
 }
 
 const VideoCard = ({
@@ -20,9 +21,17 @@ const VideoCard = ({
   progress,
   videoId,
   videoUrl,
+  onVideoClick,
 }: VideoCardProps) => {
+  const handleVideoClick = () => {
+    onVideoClick(videoId, videoUrl, title);
+  };
+
   return (
-    <Card className="glass-card transition-all duration-300 group overflow-hidden">
+    <Card
+      className="glass-card transition-all duration-300 group overflow-hidden cursor-pointer hover:scale-105"
+      onClick={handleVideoClick}
+    >
       <CardContent className="p-0">
         <div className="relative">
           <img
@@ -31,9 +40,19 @@ const VideoCard = ({
             className="w-full h-44 object-cover rounded-t-lg"
           />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg flex items-center justify-center">
-            <Play className="w-12 h-12 text-white" />
+            {progress === 100 ? (
+              <Check className="w-12 h-12 text-green-400" />
+            ) : (
+              <Play className="w-12 h-12 text-white" />
+            )}
           </div>
-          {progress > 0 && (
+          {progress === 100 && (
+            <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded-full flex items-center">
+              <Check className="w-4 h-4 mr-1" />
+              <span className="text-xs font-medium">Completed</span>
+            </div>
+          )}
+          {progress > 0 && progress < 100 && (
             <div className="absolute bottom-0 left-0 right-0 h-2 bg-black/30">
               <div
                 className="h-full bg-primary transition-all duration-300"
@@ -49,17 +68,16 @@ const VideoCard = ({
               {topic}
             </Badge>
             <div className="flex items-center text-subtle-text text-sm">
-              {/* <Clock className="w-4 h-4 mr-1" />
+              <Clock className="w-4 h-4 mr-1" />
               {duration}
-            </div> */}
             </div>
-            <h3 className="text-lg font-headings font-semibold text-accent mb-2 line-clamp-2">
-              {title}
-            </h3>
-            {/* {progress > 0 && (
-            <p className="text-sm text-subtle-text">{progress}% complete</p>
-          )} */}
           </div>
+          <h3 className="text-lg font-headings font-semibold text-accent mb-2 line-clamp-2">
+            {title}
+          </h3>
+          {progress > 0 && (
+            <p className="text-sm text-subtle-text">{progress}% complete</p>
+          )}
         </div>
       </CardContent>
     </Card>

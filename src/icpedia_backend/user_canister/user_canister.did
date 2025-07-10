@@ -1,0 +1,46 @@
+type UserError = variant {
+    Unauthorized;
+    InvalidInput : text;
+    NotInitialized
+};
+
+type MessageType = variant {
+    User;
+    AI;
+    Code
+};
+
+type ChatMessage = record {
+    id : text;
+    message_type : MessageType;
+    content : text;
+    timestamp : nat64;
+    code_language : opt text;
+    code_title : opt text
+};
+
+type UserProfile = record {
+    owner : principal;
+    username : text;
+    quizzes_completed : nat32;
+    videos_watched : nat32;
+    xp : nat32;
+    learning_streak : nat32;
+    created_at : nat64;
+    last_activity : nat64
+};
+
+service : (principal, text) -> {
+    complete_quiz : (nat32) -> (variant { Ok : UserProfile; Err : UserError });
+    watch_video : (nat32) -> (variant { Ok : UserProfile; Err : UserError });
+    get_profile : () -> (variant { Ok : UserProfile; Err : UserError }) query;
+    get_public_profile : () -> (variant { Ok : record { text; nat32; nat32 }; Err : UserError }) query;
+    update_username : (text) -> (variant { Ok : UserProfile; Err : UserError });
+    reset_progress : () -> (variant { Ok : UserProfile; Err : UserError });
+    get_owner : () -> (variant { Ok : principal; Err : UserError }) query;
+    canister_status : () -> (variant { Ok : record { bool; text; nat64 }; Err : UserError }) query;
+    ping : () -> (text) query;
+    store_chat_message : (MessageType, text, opt text, opt text) -> (variant { Ok : ChatMessage; Err : UserError });
+    get_chat_messages : (opt nat32) -> (variant { Ok : vec ChatMessage; Err : UserError }) query;
+    clear_chat_history : () -> (variant { Ok; Err : UserError })
+}
